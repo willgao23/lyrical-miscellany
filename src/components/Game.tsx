@@ -6,6 +6,7 @@ interface GameProps {
   gameState: GameState | null;
   mistakeCount: number
   setMistakeCount: Function
+  setShowAlert: Function
 }
 
 interface Answer {
@@ -13,7 +14,7 @@ interface Answer {
   color: string;
 }
 
-export const Game = ({ gameState, mistakeCount, setMistakeCount}: GameProps) => {
+export const Game = ({ gameState, mistakeCount, setMistakeCount, setShowAlert}: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(
     new Set()
@@ -39,7 +40,6 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount}: GameProps) => 
   });
   const [correctGuesses, setCorrectGuesses] = useState(0);
   const [titles, setTitles] = useState<Answer[]>([]);
-
 
   useEffect(() => {
     if (gameState !== null && rowLyrics.length === 0) {
@@ -116,6 +116,9 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount}: GameProps) => 
           ]);
           console.log("correct!");
           return;
+        } else if (tempSelected.size === 5) {
+          setShowAlert(true);
+          break;
         }
       }
       console.log("incorrect");
@@ -148,10 +151,10 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount}: GameProps) => 
       }
       
       setTileClasses(updatedTileClasses);
-
       setSelected(new Set());
       setSelectedCoords(new Set());
-      setMistakeCount(mistakeCount + 1)
+      setMistakeCount(mistakeCount + 1);
+      setTimeout(() => {setShowAlert(false)}, 1500)
     }
   }, [
     gameState,
@@ -162,7 +165,8 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount}: GameProps) => 
     selectedCoords,
     titles,
     mistakeCount,
-    setMistakeCount
+    setMistakeCount,
+    setShowAlert
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {

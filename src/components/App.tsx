@@ -4,6 +4,7 @@ import { Footer } from './Footer';
 import { Game } from './Game';
 import { Header } from './Header';
 import { GameState } from '../types/GameState';
+import { Alert } from './Alert';
 
 const App = () => {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -19,13 +20,19 @@ const App = () => {
           console.log(err.message);
         });
   }, []);
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
+    <>
+    <div className='alertContainer'>
+      {showAlert && <Alert/>}
+    </div>
     <div className='app'>
       <Header theme={gameState?.["theme"]}/>
-      <Game gameState={gameState} mistakeCount={mistakeCount} setMistakeCount={setMistakeCount}/>
+      <Game gameState={gameState} mistakeCount={mistakeCount} setMistakeCount={setMistakeCount} setShowAlert={setShowAlert}/>
       <Footer mistakeCount={mistakeCount}/>
     </div>
+    </>
   )
 }
 
