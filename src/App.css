@@ -1,0 +1,228 @@
+html, body {
+  margin: 0; 
+  height: 100%; 
+  overflow: hidden
+}
+
+#root {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: large; 
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+@keyframes mistakeAnimation {
+  0%   {background-color: #BFBFBF;}
+  25%  {background-color: #FF9797;}
+  75%  {background-color: #FF9797;}
+  100% {background-color: #D9D9D9;}
+}
+
+@keyframes correctAnimation {
+  0%   {opacity: 25%;}
+  100% {opacity: 100%;}
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EBEBEB;
+  text-align: center;
+  vertical-align: middle;
+  overflow-wrap: break-word;
+}
+
+.selectedTile {
+  background-color: #BFBFBF;
+}
+
+.mistakeAnimation {
+  animation: mistakeAnimation 0.75s;
+}
+
+.answerOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+  font-size: larger;
+  font-style: italic;
+  overflow-wrap: break-word;
+  animation: correctAnimation 2s ease-out;
+}
+
+.yellow {
+  background-color: #FFF7AC;
+}
+
+.green {
+  background-color: #C2FFAC;
+}
+
+.blue {
+  background-color: #ACF0FF;
+}
+
+.orange {
+  background-color: #FFDEAC;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoButton {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background-color: #D9D9D9;
+  font-size: medium;
+  font-weight: 700;
+  border: none;
+}
+
+.mistakeTracker {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.mistakeDot {
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  margin: 3px;
+}
+
+.unfilled {
+  background-color: #D9D9D9;
+}
+
+.filled {
+  background-color: #FF9797;
+}  
+
+@media screen and (max-width: 600px) {
+  .game {
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  .header {
+    justify-content: space-between;
+    height: 150px;
+    width: 375px;
+  }
+
+  .tile {
+    height: 85px;
+    width: 85px;
+    border-radius: 7px;
+    margin: 3px;
+    padding: 3px;
+    font-size: small;
+  }
+  
+  .answerOverlay {
+    height: 85px;
+    width: 380px;
+    border-radius: 7px;
+    margin: 3px;
+  }
+
+  .footer {
+    width: 375px;
+  }
+
+}
+
+@media screen and (max-width: 380px) {
+  .header {
+    justify-content: space-between;
+    height: 150px;
+    width: 375px;
+    margin-bottom: 20px;
+  }
+
+  .tile {
+    height: 80px;
+    width: 80px;
+    border-radius: 7px;
+    margin: 3px;
+    padding: 3px;
+    font-size: small;
+  }
+  
+  .answerOverlay {
+    height: 80px;
+    width: 360px;
+    border-radius: 7px;
+    margin: 3px;
+  }
+
+  .footer {
+    width: 350px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .game {
+    margin: 5px
+  }
+  .header {
+    justify-content: center;
+    width: 500px;
+  }
+
+  .tile {
+    height: 115px;
+    width: 115px;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .answerOverlay {
+    height: 125px;
+    width: 535px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .footer {
+    width: 500px;
+  }
+}
+
