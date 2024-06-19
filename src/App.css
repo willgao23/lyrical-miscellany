@@ -1,7 +1,8 @@
-html, body {
-  margin: 0; 
-  height: 100%; 
-  overflow: hidden
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 #root {
@@ -24,7 +25,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: large; 
+  font-size: large;
 }
 
 .game {
@@ -40,36 +41,59 @@ html, body {
 }
 
 @keyframes mistakeAnimation {
-  0%   {background-color: #BFBFBF;}
-  25%  {background-color: #FF9797;}
-  75%  {background-color: #FF9797;}
-  100% {background-color: #EBEBEB;}
+  0% {
+    background-color: #bfbfbf;
+  }
+  25% {
+    background-color: #ff9797;
+  }
+  75% {
+    background-color: #ff9797;
+  }
+  100% {
+    background-color: #ebebeb;
+  }
 }
 
 @keyframes correctAnimation {
-  0%   {opacity: 25%;}
-  100% {opacity: 100%;}
+  0% {
+    opacity: 25%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
 
 @keyframes alertAnimation {
-  0% {top: -100px; opacity: 100%}
-  50% {top: 0px; opacity: 100%;}
-  75% {top: 0px; opacity: 100%;}
-  100% {opacity: 0%;}
+  0% {
+    top: -100px;
+    opacity: 100%;
+  }
+  50% {
+    top: 0px;
+    opacity: 100%;
+  }
+  75% {
+    top: 0px;
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
 }
 
 .tile {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   text-align: center;
   vertical-align: middle;
   overflow-wrap: break-word;
 }
 
 .selectedTile {
-  background-color: #BFBFBF;
+  background-color: #bfbfbf;
 }
 
 .mistakeAnimation {
@@ -89,19 +113,19 @@ html, body {
 }
 
 .yellow {
-  background-color: #FFF7AC;
+  background-color: #fff7ac;
 }
 
 .green {
-  background-color: #C2FFAC;
+  background-color: #c2ffac;
 }
 
 .blue {
-  background-color: #ACF0FF;
+  background-color: #acf0ff;
 }
 
 .orange {
-  background-color: #FFDEAC;
+  background-color: #ffdeac;
 }
 
 .footer {
@@ -114,7 +138,7 @@ html, body {
   height: 30px;
   width: 30px;
   border-radius: 30px;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   font-size: medium;
   font-weight: 700;
   border: none;
@@ -134,12 +158,12 @@ html, body {
 }
 
 .unfilled {
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
 }
 
 .filled {
-  background-color: #FF9797;
-}  
+  background-color: #ff9797;
+}
 
 .alert {
   width: 100px;
@@ -153,7 +177,7 @@ html, body {
   font-size: medium;
   font-weight: 700;
   background-color: #000000;
-  color: #FFFFFF;
+  color: #ffffff;
   z-index: 9;
   position: absolute;
   animation: alertAnimation 1.5s;
@@ -169,6 +193,66 @@ html, body {
   align-items: center;
   position: absolute;
   pointer-events: none;
+}
+
+.modalContainer {
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.modal {
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 5px #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  width: 300px;
+  height: 350px;
+}
+
+.modalContentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+}
+
+.modalTitle {
+  font-size: x-large;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.modalBody {
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  font-size: large;
+}
+
+.exitButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+}
+
+.exitButton {
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  color: #BFBFBF;
+  font-size: large;
+  font-weight: bolder;
+  border: none;
 }
 
 @media screen and (max-width: 600px) {
@@ -191,7 +275,7 @@ html, body {
     padding: 3px;
     font-size: small;
   }
-  
+
   .answerOverlay {
     height: 85px;
     width: 380px;
@@ -220,7 +304,7 @@ html, body {
     padding: 3px;
     font-size: small;
   }
-  
+
   .answerOverlay {
     height: 80px;
     width: 360px;
@@ -235,7 +319,7 @@ html, body {
 
 @media screen and (min-width: 600px) {
   .game {
-    margin: 5px
+    margin: 5px;
   }
   .header {
     justify-content: center;
@@ -261,4 +345,3 @@ html, body {
     width: 500px;
   }
 }
-

@@ -1,6 +1,3 @@
 export const Alert = () => {
-    return <div className="alert">
-        One away...
-    </div>
-
-}
+  return <div className="alert">One away...</div>;
+};

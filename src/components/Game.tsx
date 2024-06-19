@@ -4,9 +4,11 @@ import { GameState } from "../types/GameState";
 
 interface GameProps {
   gameState: GameState | null;
-  mistakeCount: number
-  setMistakeCount: Function
-  setShowAlert: Function
+  mistakeCount: number;
+  setMistakeCount: Function;
+  setShowAlert: Function;
+  correctGuesses: number;
+  setCorrectGuesses: Function;
 }
 
 interface Answer {
@@ -14,11 +16,16 @@ interface Answer {
   color: string;
 }
 
-export const Game = ({ gameState, mistakeCount, setMistakeCount, setShowAlert}: GameProps) => {
+export const Game = ({
+  gameState,
+  mistakeCount,
+  setMistakeCount,
+  setShowAlert,
+  correctGuesses,
+  setCorrectGuesses,
+}: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [selectedCoords, setSelectedCoords] = useState<Set<string>>(
-    new Set()
-  );
+  const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
   const [rowLyrics, setRowLyrics] = useState<string[][]>([]);
   const [tileClasses, setTileClasses] = useState({
     "00": "tile",
@@ -38,7 +45,6 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount, setShowAlert}: 
     "32": "tile",
     "33": "tile",
   });
-  const [correctGuesses, setCorrectGuesses] = useState(0);
   const [titles, setTitles] = useState<Answer[]>([]);
 
   useEffect(() => {
@@ -71,19 +77,23 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount, setShowAlert}: 
         }
         if (tempSelected.size === 4) {
           const colorMapping = ["yellow", "green", "blue", "orange"];
-          const seenTiles = new Set()
+          const seenTiles = new Set();
           const selectedCoordValues = selectedCoords.values();
           for (let m = 0; m < 4; m++) {
-            const selectedCoord = selectedCoordValues.next().value.split('');
+            const selectedCoord = selectedCoordValues.next().value.split("");
             if (selectedCoord[0] !== correctGuesses.toString()) {
               for (let n = 0; n < 4; n++) {
-                if (!selectedCoords.has(correctGuesses.toString().concat(n.toString())) && !seenTiles.has(n)) {
+                if (
+                  !selectedCoords.has(
+                    correctGuesses.toString().concat(n.toString()),
+                  ) &&
+                  !seenTiles.has(n)
+                ) {
                   const tempLyric = rowLyrics[correctGuesses][n];
                   rowLyrics[correctGuesses][n] =
                     rowLyrics[selectedCoord[0]][selectedCoord[1]];
-                  rowLyrics[selectedCoord[0]][selectedCoord[1]] =
-                    tempLyric;
-                    seenTiles.add(n)
+                  rowLyrics[selectedCoord[0]][selectedCoord[1]] = tempLyric;
+                  seenTiles.add(n);
                   break;
                 }
               }
@@ -140,33 +150,36 @@ export const Game = ({ gameState, mistakeCount, setMistakeCount, setShowAlert}: 
         "31": "tile",
         "32": "tile",
         "33": "tile",
-      }
+      };
 
       for (let p = 0; p < 4; p++) {
-        const selectedCoordValue = selectedCoordValues.next().value
+        const selectedCoordValue = selectedCoordValues.next().value;
         updatedTileClasses = {
           ...updatedTileClasses,
-          [selectedCoordValue]: "tile mistakeAnimation"
-        }
+          [selectedCoordValue]: "tile mistakeAnimation",
+        };
       }
-      
+
       setTileClasses(updatedTileClasses);
       setSelected(new Set());
       setSelectedCoords(new Set());
       setMistakeCount(mistakeCount + 1);
-      setTimeout(() => {setShowAlert(false)}, 1500)
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 1500);
     }
   }, [
     gameState,
     selected,
     correctGuesses,
+    setCorrectGuesses,
     tileClasses,
     rowLyrics,
     selectedCoords,
     titles,
     mistakeCount,
     setMistakeCount,
-    setShowAlert
+    setShowAlert,
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {

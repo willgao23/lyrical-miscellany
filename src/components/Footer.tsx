@@ -1,15 +1,16 @@
-import { InfoButton } from "./InfoButton"
-import { MistakeTracker } from "./MistakeTracker"
+import { InfoButton } from "./InfoButton";
+import { MistakeTracker } from "./MistakeTracker";
 
 interface FooterProps {
-  mistakeCount: number
+  mistakeCount: number;
+  setShowInfoModal: Function
 }
 
-export const Footer = ({mistakeCount}: FooterProps) => {
-    return (
-      <div className='footer'>
-        <InfoButton/>
-        <MistakeTracker mistakeCount={mistakeCount}/>
-      </div>
-    )
-  }
+export const Footer = ({ mistakeCount, setShowInfoModal}: FooterProps) => {
+  return (
+    <div className="footer">
+      <InfoButton setShowInfoModal={setShowInfoModal}/>
+      <MistakeTracker mistakeCount={mistakeCount} />
+    </div>
+  );
+};

@@ -1,9 +1,7 @@
 interface MistakeDotProps {
-  isFilled: string
+  isFilled: string;
 }
 
-export const MistakeDot = ({isFilled}: MistakeDotProps) => {
-    return (
-      <div className={`mistakeDot ${isFilled}`}></div>
-    )
-  }
+export const MistakeDot = ({ isFilled }: MistakeDotProps) => {
+  return <div className={`mistakeDot ${isFilled}`}></div>;
+};

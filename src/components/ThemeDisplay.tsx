@@ -1,11 +1,7 @@
 interface ThemeDisplayProps {
-    theme: any
+  theme: any;
 }
 
-export const ThemeDisplay = ({theme}: ThemeDisplayProps) => {
-    return (
-        <div>
-            {`Today's theme: ${theme}`}
-        </div>
-    )
-}
+export const ThemeDisplay = ({ theme }: ThemeDisplayProps) => {
+  return <div>{`Today's theme: ${theme}`}</div>;
+};

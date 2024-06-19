@@ -1,30 +1,65 @@
-import { AnswerOverlay } from "./AnswerOverlay"
-import { Tile } from "./Tile"
+import { AnswerOverlay } from "./AnswerOverlay";
+import { Tile } from "./Tile";
 
 interface RowProps {
-  rowLyrics: string[]
-  onClick: Function
-  rowNumber: number
-  tileClasses: any
-  setTileClasses: Function
-  showAnswer: boolean
-  title: string
-  answerColor: string
+  rowLyrics: string[];
+  onClick: Function;
+  rowNumber: number;
+  tileClasses: any;
+  setTileClasses: Function;
+  showAnswer: boolean;
+  title: string;
+  answerColor: string;
 }
 
-export const Row = ({rowLyrics, onClick, rowNumber, tileClasses, setTileClasses, showAnswer, title, answerColor}: RowProps) => {
+export const Row = ({
+  rowLyrics,
+  onClick,
+  rowNumber,
+  tileClasses,
+  setTileClasses,
+  showAnswer,
+  title,
+  answerColor,
+}: RowProps) => {
   if (showAnswer) {
-    return (
-      <AnswerOverlay title={title} color={answerColor}/>
-    )
+    return <AnswerOverlay title={title} color={answerColor} />;
   } else {
     return (
-      <div className='row'>
-        <Tile lyric={rowLyrics?.[0]} rowNumber={rowNumber} tileNumber={0} onClick={onClick} tileClasses={tileClasses} setTileClasses={setTileClasses}/>
-        <Tile lyric={rowLyrics?.[1]} rowNumber={rowNumber} tileNumber={1} onClick={onClick} tileClasses={tileClasses} setTileClasses={setTileClasses}/>
-        <Tile lyric={rowLyrics?.[2]} rowNumber={rowNumber} tileNumber={2} onClick={onClick} tileClasses={tileClasses} setTileClasses={setTileClasses}/>
-        <Tile lyric={rowLyrics?.[3]} rowNumber={rowNumber} tileNumber={3} onClick={onClick} tileClasses={tileClasses} setTileClasses={setTileClasses}/>
+      <div className="row">
+        <Tile
+          lyric={rowLyrics?.[0]}
+          rowNumber={rowNumber}
+          tileNumber={0}
+          onClick={onClick}
+          tileClasses={tileClasses}
+          setTileClasses={setTileClasses}
+        />
+        <Tile
+          lyric={rowLyrics?.[1]}
+          rowNumber={rowNumber}
+          tileNumber={1}
+          onClick={onClick}
+          tileClasses={tileClasses}
+          setTileClasses={setTileClasses}
+        />
+        <Tile
+          lyric={rowLyrics?.[2]}
+          rowNumber={rowNumber}
+          tileNumber={2}
+          onClick={onClick}
+          tileClasses={tileClasses}
+          setTileClasses={setTileClasses}
+        />
+        <Tile
+          lyric={rowLyrics?.[3]}
+          rowNumber={rowNumber}
+          tileNumber={3}
+          onClick={onClick}
+          tileClasses={tileClasses}
+          setTileClasses={setTileClasses}
+        />
       </div>
-    )
+    );
   }
-  }
+};
