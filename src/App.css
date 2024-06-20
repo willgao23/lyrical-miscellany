@@ -144,6 +144,11 @@ body {
   border: none;
 }
 
+.infoButton:active,
+.infoButton:hover {
+  background-color: #bfbfbf;
+}
+
 .mistakeTracker {
   display: flex;
   flex-direction: row;
@@ -207,7 +212,7 @@ body {
 }
 
 .modal {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0px 0px 5px #000000;
   display: flex;
   flex-direction: column;
@@ -223,7 +228,6 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  
 }
 
 .modalTitle {
@@ -238,18 +242,43 @@ body {
   font-size: large;
 }
 
+.resultBodyText {
+  text-align: center;
+  font-size: larger;
+  margin-bottom: 20px;
+}
+
 .exitButtonContainer {
   display: flex;
   justify-content: flex-end;
   width: 300px;
 }
 
+.exitButton:active,
+.exitButton:hover {
+  color: #000000;
+}
+
+.modalButton {
+  width: 140px;
+  height: 35px;
+  border-radius: 10px;
+  outline: #000000;
+  background-color: #ffffff;
+  z-index: 9;
+}
+
+.modalButton:active,
+.modalButton:hover {
+  background-color: #ebebeb;
+}
+
 .exitButton {
   height: 30px;
   width: 30px;
   border-radius: 30px;
-  background-color: #FFFFFF;
-  color: #BFBFBF;
+  background-color: #ffffff;
+  color: #bfbfbf;
   font-size: large;
   font-weight: bolder;
   border: none;

@@ -9,6 +9,8 @@ interface GameProps {
   setShowAlert: Function;
   correctGuesses: number;
   setCorrectGuesses: Function;
+  history: string[][];
+  setHistory: Function;
 }
 
 interface Answer {
@@ -23,6 +25,8 @@ export const Game = ({
   setShowAlert,
   correctGuesses,
   setCorrectGuesses,
+  setHistory,
+  history,
 }: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
@@ -70,13 +74,21 @@ export const Game = ({
 
   useEffect(() => {
     if (selected.size >= 4 && gameState) {
+      const colorMapping = ["yellow", "green", "blue", "orange"];
+      const guesses = [];
       for (let i = 0; i < 4; i++) {
+        console.log(`iteration ${i}`);
         const tempSelected = new Set(selected);
         for (let j = 0; j < 4; j++) {
+          const tempSelectedSize = tempSelected.size;
           tempSelected.add(gameState["songs"][i]["lyrics"][j]);
+          console.log(tempSelectedSize);
+          if (tempSelectedSize === tempSelected.size) {
+            guesses.push(colorMapping[i]);
+            console.log(guesses);
+          }
         }
         if (tempSelected.size === 4) {
-          const colorMapping = ["yellow", "green", "blue", "orange"];
           const seenTiles = new Set();
           const selectedCoordValues = selectedCoords.values();
           for (let m = 0; m < 4; m++) {
@@ -124,11 +136,12 @@ export const Game = ({
             ...titles,
             { title: gameState["songs"][i]["title"], color: colorMapping[i] },
           ]);
+          setHistory([...history, guesses]);
+          console.log(history);
           console.log("correct!");
           return;
         } else if (tempSelected.size === 5) {
           setShowAlert(true);
-          break;
         }
       }
       console.log("incorrect");
@@ -164,6 +177,7 @@ export const Game = ({
       setSelected(new Set());
       setSelectedCoords(new Set());
       setMistakeCount(mistakeCount + 1);
+      setHistory([...history, guesses]);
       setTimeout(() => {
         setShowAlert(false);
       }, 1500);
@@ -180,6 +194,8 @@ export const Game = ({
     mistakeCount,
     setMistakeCount,
     setShowAlert,
+    history,
+    setHistory,
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {
