@@ -15,6 +15,7 @@ const App = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [history, setHistory] = useState<string[][]>([]);
   const [prevHistoryLength, setPrevHistoryLength] = useState(0);
   const [guessGridText, setGuessGridText] = useState("");
@@ -82,6 +83,12 @@ const App = () => {
     }
   }, [mistakeCount, gameState, titles, correctGuesses]);
 
+  useEffect(() => {
+    if (correctGuesses === 4) {
+      setShowVictoryModal(true);
+    }
+  }, [correctGuesses]);
+
   return (
     <>
       {showAlert && (
@@ -107,9 +114,21 @@ const App = () => {
         <div className="modalContainer">
           <Modal
             titleText={"Better luck next time..."}
-            bodyText={`Streak: 0${String.fromCodePoint(0x1f525)}\n\n ${guessGridText}`}
+            bodyText={`Streak: 0${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
             isShareButtonModal={true}
             modalExitFunction={() => setShowGameOverModal(false)}
+            date={gameState?.["date"]}
+            theme={gameState?.["theme"]}
+          />
+        </div>
+      )}
+      {showVictoryModal && (
+        <div className="modalContainer">
+          <Modal
+            titleText={"Lyrical savant!"}
+            bodyText={`Streak: 0${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
+            isShareButtonModal={true}
+            modalExitFunction={() => setShowVictoryModal(false)}
             date={gameState?.["date"]}
             theme={gameState?.["theme"]}
           />
