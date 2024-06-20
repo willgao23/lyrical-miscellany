@@ -97,7 +97,7 @@ body {
 }
 
 .mistakeAnimation {
-  animation: mistakeAnimation 1.5s;
+  animation: mistakeAnimation 0.75s;
 }
 
 .answerOverlay {
@@ -221,6 +221,7 @@ body {
   padding: 20px;
   width: 300px;
   height: 350px;
+  animation: correctAnimation 0.75s;
 }
 
 .modalContentContainer {

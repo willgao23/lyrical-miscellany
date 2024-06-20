@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Row } from "./Row";
 import { GameState } from "../types/GameState";
+import { Answer } from "../types/Answer";
 
 interface GameProps {
   gameState: GameState | null;
@@ -11,11 +12,8 @@ interface GameProps {
   setCorrectGuesses: Function;
   history: string[][];
   setHistory: Function;
-}
-
-interface Answer {
-  title: string;
-  color: string;
+  titles: Answer[];
+  setTitles: Function;
 }
 
 export const Game = ({
@@ -27,6 +25,8 @@ export const Game = ({
   setCorrectGuesses,
   setHistory,
   history,
+  titles,
+  setTitles,
 }: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
@@ -49,7 +49,6 @@ export const Game = ({
     "32": "tile",
     "33": "tile",
   });
-  const [titles, setTitles] = useState<Answer[]>([]);
 
   useEffect(() => {
     if (gameState !== null && rowLyrics.length === 0) {
@@ -77,15 +76,12 @@ export const Game = ({
       const colorMapping = ["yellow", "green", "blue", "orange"];
       const guesses = [];
       for (let i = 0; i < 4; i++) {
-        console.log(`iteration ${i}`);
         const tempSelected = new Set(selected);
         for (let j = 0; j < 4; j++) {
           const tempSelectedSize = tempSelected.size;
           tempSelected.add(gameState["songs"][i]["lyrics"][j]);
-          console.log(tempSelectedSize);
           if (tempSelectedSize === tempSelected.size) {
             guesses.push(colorMapping[i]);
-            console.log(guesses);
           }
         }
         if (tempSelected.size === 4) {
@@ -137,14 +133,11 @@ export const Game = ({
             { title: gameState["songs"][i]["title"], color: colorMapping[i] },
           ]);
           setHistory([...history, guesses]);
-          console.log(history);
-          console.log("correct!");
           return;
         } else if (tempSelected.size === 5) {
           setShowAlert(true);
         }
       }
-      console.log("incorrect");
       const selectedCoordValues = selectedCoords.values();
       let updatedTileClasses = {
         "00": "tile",
@@ -196,6 +189,7 @@ export const Game = ({
     setShowAlert,
     history,
     setHistory,
+    setTitles,
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {

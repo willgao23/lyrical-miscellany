@@ -6,6 +6,7 @@ import { Header } from "./Header";
 import { GameState } from "../types/GameState";
 import { Alert } from "./Alert";
 import { Modal } from "./Modal";
+import { Answer } from "../types/Answer";
 
 const App = () => {
   const [gameState, setGameState] = useState<GameState | null>(null);
@@ -17,6 +18,7 @@ const App = () => {
   const [history, setHistory] = useState<string[][]>([]);
   const [prevHistoryLength, setPrevHistoryLength] = useState(0);
   const [guessGridText, setGuessGridText] = useState("");
+  const [titles, setTitles] = useState<Answer[]>([]);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/game")
@@ -24,7 +26,6 @@ const App = () => {
       .then((data) => {
         console.log(data);
         setGameState(data);
-        console.log("".concat(String.fromCodePoint(0x1f7e8)));
       })
       .catch((err) => {
         console.log(err.message);
@@ -32,7 +33,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(history);
     if (history.length !== prevHistoryLength) {
       const colorEmojiMapping: Map<string, number> = new Map();
       colorEmojiMapping.set("yellow", 0x1f7e8);
@@ -47,21 +47,40 @@ const App = () => {
         if (emojiMapping) {
           guessRow = guessRow.concat(String.fromCodePoint(emojiMapping));
         }
-        console.log(guessRow);
       }
       guessRow = guessRow.concat("\n");
       const updatedGuessGridText = guessGridText.concat(guessRow);
       setGuessGridText(updatedGuessGridText);
       setPrevHistoryLength(prevHistoryLength + 1);
-      console.log(guessGridText);
     }
   }, [history, guessGridText, prevHistoryLength]);
 
   useEffect(() => {
-    if (mistakeCount >= 4) {
-      setShowGameOverModal(true);
+    const colorMapping = ["yellow", "green", "blue", "orange"];
+    if (mistakeCount >= 4 && gameState && titles.length < 4) {
+      const updatedTitles = [...titles];
+
+      for (let i = 0; i < 4; i++) {
+        const answer = {
+          title: gameState["songs"][i]["title"],
+          color: colorMapping[i],
+        };
+        let answerInTitles = false;
+        for (let j = 0; j < titles.length; j++) {
+          if (titles[j]["title"] === gameState["songs"][i]["title"]) {
+            answerInTitles = true;
+          }
+        }
+        if (!answerInTitles) {
+          updatedTitles.push(answer);
+          console.log(updatedTitles);
+        }
+      }
+      setTitles(updatedTitles);
+      setCorrectGuesses(5);
+      setTimeout(() => setShowGameOverModal(true), 2000);
     }
-  }, [mistakeCount]);
+  }, [mistakeCount, gameState, titles, correctGuesses]);
 
   return (
     <>
@@ -107,6 +126,8 @@ const App = () => {
           setCorrectGuesses={setCorrectGuesses}
           history={history}
           setHistory={setHistory}
+          titles={titles}
+          setTitles={setTitles}
         />
         <Footer
           mistakeCount={mistakeCount}
