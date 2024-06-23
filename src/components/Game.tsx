@@ -14,6 +14,9 @@ interface GameProps {
   setHistory: Function;
   titles: Answer[];
   setTitles: Function;
+  historyIsSynched: boolean;
+  setHistoryIsSynched: Function;
+  setAlertText: Function;
 }
 
 export const Game = ({
@@ -27,6 +30,9 @@ export const Game = ({
   history,
   titles,
   setTitles,
+  historyIsSynched,
+  setHistoryIsSynched,
+  setAlertText
 }: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
@@ -49,6 +55,7 @@ export const Game = ({
     "32": "tile",
     "33": "tile",
   });
+  const [rowsUpdated, setRowsUpdated] = useState(false);
 
   useEffect(() => {
     if (gameState !== null && rowLyrics.length === 0) {
@@ -70,6 +77,37 @@ export const Game = ({
       setRowLyrics(tempRowLyrics);
     }
   }, [gameState, rowLyrics]);
+
+  useEffect(() => {
+    if (gameState !== null && historyIsSynched && !rowsUpdated) {
+      let seenLyrics = new Set<string>();
+      const tempRowLyrics = [];
+      const colorMapping = ["yellow", "green", "blue", "orange"];
+      let alreadyGuessedSongIndices = new Set<number>();
+      for (let i = 0; i < titles.length; i++) {
+        alreadyGuessedSongIndices.add(colorMapping.indexOf(titles[i]["color"]));
+      }
+      for (let i = 0; i< alreadyGuessedSongIndices.size; i++) {
+        tempRowLyrics.push(["filler", "filler", "filler", "filler"])
+      }
+      while (tempRowLyrics.length < 4) {
+        const currRowLyrics = [];
+        while (currRowLyrics.length < 4) {
+          const songIndex = Math.floor(Math.random() * 4);
+          const lyricIndex = Math.floor(Math.random() * 4);
+          const lyric = gameState["songs"][songIndex]["lyrics"][lyricIndex];
+          if (!seenLyrics.has(lyric) && !alreadyGuessedSongIndices.has(songIndex)) {
+            currRowLyrics.push(lyric);
+            seenLyrics.add(lyric);
+          }
+        }
+        tempRowLyrics.push(currRowLyrics);
+      }
+      setRowLyrics(tempRowLyrics);
+      setHistoryIsSynched(false)
+      setRowsUpdated(true);
+    }
+  }, [gameState, titles, historyIsSynched, setHistoryIsSynched, rowsUpdated])
 
   useEffect(() => {
     if (selected.size >= 4 && gameState) {
@@ -135,6 +173,7 @@ export const Game = ({
           setHistory([...history, guesses]);
           return;
         } else if (tempSelected.size === 5) {
+          setAlertText("One away...")
           setShowAlert(true);
         }
       }
@@ -190,6 +229,7 @@ export const Game = ({
     history,
     setHistory,
     setTitles,
+    setAlertText
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {

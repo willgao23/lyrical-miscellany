@@ -1,3 +1,7 @@
-export const Alert = () => {
-  return <div className="alert">One away...</div>;
+interface AlertProps {
+    text: string;
+}
+
+export const Alert = ({text}: AlertProps) => {
+  return <div className="alert">{text}</div>;
 };
