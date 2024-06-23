@@ -23,6 +23,7 @@ const App = () => {
   const [titles, setTitles] = useState<Answer[]>([]);
   const [syncHistory, setSyncHistory] = useState(false);
   const [historyIsSynched, setHistoryIsSynched] = useState(false);
+  const [shouldShuffle, setShouldShuffle] = useState(false)
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/game")
@@ -230,10 +231,13 @@ const App = () => {
           historyIsSynched={historyIsSynched}
           setHistoryIsSynched={setHistoryIsSynched}
           setAlertText={setAlertText}
+          shouldShuffle={shouldShuffle}
+          setShouldShuffle={setShouldShuffle}
         />
         <Footer
           mistakeCount={mistakeCount}
           setShowInfoModal={setShowInfoModal}
+          setShouldShuffle={setShouldShuffle}
         />
       </div>
     </>

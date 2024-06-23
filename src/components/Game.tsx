@@ -17,6 +17,8 @@ interface GameProps {
   historyIsSynched: boolean;
   setHistoryIsSynched: Function;
   setAlertText: Function;
+  shouldShuffle: boolean;
+  setShouldShuffle: Function;
 }
 
 export const Game = ({
@@ -32,7 +34,9 @@ export const Game = ({
   setTitles,
   historyIsSynched,
   setHistoryIsSynched,
-  setAlertText
+  setAlertText,
+  shouldShuffle,
+  setShouldShuffle
 }: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
@@ -79,7 +83,7 @@ export const Game = ({
   }, [gameState, rowLyrics]);
 
   useEffect(() => {
-    if (gameState !== null && historyIsSynched && !rowsUpdated) {
+    if (gameState !== null && ((historyIsSynched && !rowsUpdated) || shouldShuffle)) {
       let seenLyrics = new Set<string>();
       const tempRowLyrics = [];
       const colorMapping = ["yellow", "green", "blue", "orange"];
@@ -106,8 +110,9 @@ export const Game = ({
       setRowLyrics(tempRowLyrics);
       setHistoryIsSynched(false)
       setRowsUpdated(true);
+      setShouldShuffle(false)
     }
-  }, [gameState, titles, historyIsSynched, setHistoryIsSynched, rowsUpdated])
+  }, [gameState, titles, historyIsSynched, setHistoryIsSynched, rowsUpdated, shouldShuffle, setShouldShuffle])
 
   useEffect(() => {
     if (selected.size >= 4 && gameState) {
