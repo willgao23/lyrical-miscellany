@@ -5,8 +5,8 @@ interface ModalProps {
   modalExitFunction: Function;
   date: string | undefined;
   theme: string | undefined;
-  setAlertText: Function
-  setShowAlert: Function
+  setAlertText: Function;
+  setShowAlert: Function;
 }
 
 export const Modal = ({
@@ -17,7 +17,7 @@ export const Modal = ({
   date,
   theme,
   setAlertText,
-  setShowAlert
+  setShowAlert,
 }: ModalProps) => {
   return (
     <div className="modal">
@@ -40,9 +40,9 @@ export const Modal = ({
               navigator.clipboard.writeText(
                 `Lyrical Miscellany\n${date}\nToday's theme: ${theme}\nMy result:\n${bodyText}`,
               );
-              setAlertText("Copied to clipboard!")
-              setShowAlert(true)
-              setTimeout(() => setShowAlert(false), 1500)
+              setAlertText("Copied to clipboard!");
+              setShowAlert(true);
+              setTimeout(() => setShowAlert(false), 1500);
             }}
           >
             Share Your Results

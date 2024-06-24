@@ -23,7 +23,7 @@ const App = () => {
   const [titles, setTitles] = useState<Answer[]>([]);
   const [syncHistory, setSyncHistory] = useState(false);
   const [historyIsSynched, setHistoryIsSynched] = useState(false);
-  const [shouldShuffle, setShouldShuffle] = useState(false)
+  const [shouldShuffle, setShouldShuffle] = useState(false);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/game")
@@ -34,61 +34,73 @@ const App = () => {
       .catch((err) => {
         console.log(err.message);
       });
-    const savedStreak = localStorage.getItem("streak")
-    const lastPlayed = localStorage.getItem("lastPlayed")
-    const storedHistory = localStorage.getItem("history")
+    const savedStreak = localStorage.getItem("streak");
+    const lastPlayed = localStorage.getItem("lastPlayed");
+    const storedHistory = localStorage.getItem("history");
     if (!savedStreak) {
       localStorage.setItem("streak", "0");
       setShowInfoModal(true);
     }
-    if ((lastPlayed && lastPlayed === new Date().toLocaleString('default', { month: 'long', day: '2-digit', year: 'numeric'}) && storedHistory)) {
+    if (
+      lastPlayed &&
+      lastPlayed ===
+        new Date().toLocaleString("default", {
+          month: "long",
+          day: "2-digit",
+          year: "numeric",
+        }) &&
+      storedHistory
+    ) {
       setSyncHistory(true);
     } else {
-      localStorage.setItem("history", "")
-      localStorage.setItem("wonToday", "false")
+      localStorage.setItem("history", "");
+      localStorage.setItem("wonToday", "false");
       setHistoryIsSynched(true);
     }
   }, []);
 
   useEffect(() => {
-    const storedHistory = localStorage.getItem("history")
-    if (gameState && (syncHistory && storedHistory)) {
+    const storedHistory = localStorage.getItem("history");
+    if (gameState && syncHistory && storedHistory) {
       const colorMapping = ["yellow", "green", "blue", "orange"];
-      const storedHistoryArray = storedHistory.split(",")
-      const updatedHistory = []
-      const updatedTitles = []
+      const storedHistoryArray = storedHistory.split(",");
+      const updatedHistory = [];
+      const updatedTitles = [];
       let numCorrect = 0;
       let numMistakes = 0;
       for (let i = 0; i < Math.floor(storedHistoryArray.length / 4); i++) {
         const historyEntry = [];
         let firstSeen = "";
         let isCorrect = true;
-        for (let j = i * 4; j < (i * 4) + 4; j++) {
-          const value = storedHistoryArray[j]
+        for (let j = i * 4; j < i * 4 + 4; j++) {
+          const value = storedHistoryArray[j];
           if (!firstSeen) {
-            firstSeen = value
+            firstSeen = value;
           } else {
             if (firstSeen !== value) {
               isCorrect = false;
             }
           }
-          historyEntry.push(value)
+          historyEntry.push(value);
         }
         if (isCorrect) {
           numCorrect = numCorrect + 1;
           const titleIndex = colorMapping.indexOf(firstSeen);
-          updatedTitles.push({title: gameState["songs"][titleIndex]["title"], color: firstSeen})
+          updatedTitles.push({
+            title: gameState["songs"][titleIndex]["title"],
+            color: firstSeen,
+          });
         } else {
           numMistakes = numMistakes + 1;
         }
-        updatedHistory.push(historyEntry)
+        updatedHistory.push(historyEntry);
       }
-      setHistory(updatedHistory)
-      setTitles(updatedTitles)
-      setCorrectGuesses(numCorrect)
-      setMistakeCount(numMistakes)
+      setHistory(updatedHistory);
+      setTitles(updatedTitles);
+      setCorrectGuesses(numCorrect);
+      setMistakeCount(numMistakes);
     }
-  }, [syncHistory, gameState])
+  }, [syncHistory, gameState]);
 
   useEffect(() => {
     if (history && history.length !== prevHistoryLength) {
@@ -102,15 +114,13 @@ const App = () => {
       for (let i = 0; i < history.length; i++) {
         let guessRow = "";
         for (let j = 0; j < 4; j++) {
-          const emojiMapping = colorEmojiMapping.get(
-            history[i][j],
-          );
+          const emojiMapping = colorEmojiMapping.get(history[i][j]);
           if (emojiMapping) {
             guessRow = guessRow.concat(String.fromCodePoint(emojiMapping));
           }
         }
         guessRow = guessRow.concat("\n");
-        updatedGuessGridText = updatedGuessGridText.concat(guessRow)
+        updatedGuessGridText = updatedGuessGridText.concat(guessRow);
       }
       setGuessGridText(updatedGuessGridText);
       setPrevHistoryLength(prevHistoryLength + 1);
@@ -121,7 +131,7 @@ const App = () => {
   useEffect(() => {
     const colorMapping = ["yellow", "green", "blue", "orange"];
     if (gameState && mistakeCount > 0) {
-      localStorage.setItem("lastPlayed", gameState["date"])
+      localStorage.setItem("lastPlayed", gameState["date"]);
       if (mistakeCount >= 4 && titles.length < 4) {
         setTimeout(() => {
           const updatedTitles = [...titles];
@@ -142,7 +152,7 @@ const App = () => {
           }
           setTitles(updatedTitles);
           setCorrectGuesses(5);
-          localStorage.setItem("streak", "0")
+          localStorage.setItem("streak", "0");
           setTimeout(() => setShowGameOverModal(true), 2500);
         }, 1100);
       }
@@ -151,14 +161,14 @@ const App = () => {
 
   useEffect(() => {
     if (gameState && correctGuesses > 0) {
-      const prevStreak = Number(localStorage.getItem("streak"))
-      localStorage.setItem("lastPlayed", gameState["date"])
+      const prevStreak = Number(localStorage.getItem("streak"));
+      localStorage.setItem("lastPlayed", gameState["date"]);
       if (correctGuesses === 4) {
         setShowVictoryModal(true);
         const wonToday = localStorage.getItem("wonToday");
-        if (prevStreak !== null && (wonToday && wonToday === "false")) {
+        if (prevStreak !== null && wonToday && wonToday === "false") {
           localStorage.setItem("streak", (prevStreak + 1).toString());
-          localStorage.setItem("wonToday", "true")
+          localStorage.setItem("wonToday", "true");
         }
       }
     }
@@ -168,7 +178,7 @@ const App = () => {
     <>
       {showAlert && (
         <div className="alertContainer">
-          <Alert text={alertText}/>
+          <Alert text={alertText} />
         </div>
       )}
       {showInfoModal && (

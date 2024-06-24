@@ -36,7 +36,7 @@ export const Game = ({
   setHistoryIsSynched,
   setAlertText,
   shouldShuffle,
-  setShouldShuffle
+  setShouldShuffle,
 }: GameProps) => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [selectedCoords, setSelectedCoords] = useState<Set<string>>(new Set());
@@ -83,7 +83,10 @@ export const Game = ({
   }, [gameState, rowLyrics]);
 
   useEffect(() => {
-    if (gameState !== null && ((historyIsSynched && !rowsUpdated) || shouldShuffle)) {
+    if (
+      gameState !== null &&
+      ((historyIsSynched && !rowsUpdated) || shouldShuffle)
+    ) {
       let seenLyrics = new Set<string>();
       const tempRowLyrics = [];
       const colorMapping = ["yellow", "green", "blue", "orange"];
@@ -91,8 +94,8 @@ export const Game = ({
       for (let i = 0; i < titles.length; i++) {
         alreadyGuessedSongIndices.add(colorMapping.indexOf(titles[i]["color"]));
       }
-      for (let i = 0; i< alreadyGuessedSongIndices.size; i++) {
-        tempRowLyrics.push(["filler", "filler", "filler", "filler"])
+      for (let i = 0; i < alreadyGuessedSongIndices.size; i++) {
+        tempRowLyrics.push(["filler", "filler", "filler", "filler"]);
       }
       while (tempRowLyrics.length < 4) {
         const currRowLyrics = [];
@@ -100,7 +103,10 @@ export const Game = ({
           const songIndex = Math.floor(Math.random() * 4);
           const lyricIndex = Math.floor(Math.random() * 4);
           const lyric = gameState["songs"][songIndex]["lyrics"][lyricIndex];
-          if (!seenLyrics.has(lyric) && !alreadyGuessedSongIndices.has(songIndex)) {
+          if (
+            !seenLyrics.has(lyric) &&
+            !alreadyGuessedSongIndices.has(songIndex)
+          ) {
             currRowLyrics.push(lyric);
             seenLyrics.add(lyric);
           }
@@ -108,11 +114,19 @@ export const Game = ({
         tempRowLyrics.push(currRowLyrics);
       }
       setRowLyrics(tempRowLyrics);
-      setHistoryIsSynched(false)
+      setHistoryIsSynched(false);
       setRowsUpdated(true);
-      setShouldShuffle(false)
+      setShouldShuffle(false);
     }
-  }, [gameState, titles, historyIsSynched, setHistoryIsSynched, rowsUpdated, shouldShuffle, setShouldShuffle])
+  }, [
+    gameState,
+    titles,
+    historyIsSynched,
+    setHistoryIsSynched,
+    rowsUpdated,
+    shouldShuffle,
+    setShouldShuffle,
+  ]);
 
   useEffect(() => {
     if (selected.size >= 4 && gameState) {
@@ -178,7 +192,7 @@ export const Game = ({
           setHistory([...history, guesses]);
           return;
         } else if (tempSelected.size === 5) {
-          setAlertText("One away...")
+          setAlertText("One away...");
           setShowAlert(true);
         }
       }
@@ -234,7 +248,7 @@ export const Game = ({
     history,
     setHistory,
     setTitles,
-    setAlertText
+    setAlertText,
   ]);
 
   const handleOnClick = (rowNumber: number, tileNumber: number): boolean => {
