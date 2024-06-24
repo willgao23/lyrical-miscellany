@@ -113,6 +113,26 @@ export const Game = ({
         }
         tempRowLyrics.push(currRowLyrics);
       }
+      setTileClasses({
+        "00": "tile",
+        "01": "tile",
+        "02": "tile",
+        "03": "tile",
+        "10": "tile",
+        "11": "tile",
+        "12": "tile",
+        "13": "tile",
+        "20": "tile",
+        "21": "tile",
+        "22": "tile",
+        "23": "tile",
+        "30": "tile",
+        "31": "tile",
+        "32": "tile",
+        "33": "tile",
+      });
+      setSelected(new Set());
+      setSelectedCoords(new Set());
       setRowLyrics(tempRowLyrics);
       setHistoryIsSynched(false);
       setRowsUpdated(true);
