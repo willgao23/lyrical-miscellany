@@ -72,9 +72,6 @@ const App = () => {
       localStorage.setItem("streak", "0");
       setShowInfoModal(true);
     }
-    console.log(lastPlayed)
-    console.log(`${monthNames[month - 1]} ${day}, ${year}`)
-    console.log(lastPlayed === `${monthNames[month - 1]} ${day}, ${year}`)
     if (
       lastPlayed &&
       lastPlayed === `${monthNames[month - 1]} ${day}, ${year}` &&
