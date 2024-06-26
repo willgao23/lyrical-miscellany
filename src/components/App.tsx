@@ -28,7 +28,7 @@ const App = () => {
   useEffect(() => {
     const dateObject = new Date();
     fetch(
-      "Your backend endpoint",
+      "https://lyrical-miscellany-backend.ta0ncc8o1ashc.ca-central-1.cs.amazonlightsail.com/game",
       {
         method: "POST",
         headers: {
