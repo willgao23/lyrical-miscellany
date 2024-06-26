@@ -27,16 +27,20 @@ const App = () => {
 
   useEffect(() => {
     const dateObject = new Date();
-    fetch("Your backend endpoint", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    fetch(
+      "Your backend endpoint",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          year: dateObject.getFullYear(),
+          month: dateObject.getMonth() + 1,
+          day: dateObject.getDate(),
+        }),
       },
-      body: JSON.stringify({
-        year: dateObject.getFullYear(),
-        month: dateObject.getMonth() + 1,
-        day: dateObject.getDate()
-      })})
+    )
       .then((response) => response.json())
       .then((data) => {
         setGameState(data);
@@ -54,7 +58,7 @@ const App = () => {
     if (
       lastPlayed &&
       lastPlayed ===
-          dateObject.toLocaleString("default", {
+        dateObject.toLocaleString("default", {
           month: "long",
           day: "2-digit",
           year: "numeric",
