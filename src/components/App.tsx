@@ -26,6 +26,24 @@ const App = () => {
   const [shouldShuffle, setShouldShuffle] = useState(false);
 
   useEffect(() => {
+    const dateObject = new Date();
+    const year = dateObject.getFullYear();
+    const month = dateObject.getMonth() + 1;
+    const day = dateObject.getDate();
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     fetch(
       "https://lyrical-miscellany-backend.ta0ncc8o1ashc.ca-central-1.cs.amazonlightsail.com/game",
       {
@@ -34,9 +52,9 @@ const App = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          year: new Date().getFullYear(),
-          month: new Date().getMonth() + 1,
-          day: new Date().getDate(),
+          year: year,
+          month: month,
+          day: day,
         }),
       },
     )
@@ -55,26 +73,11 @@ const App = () => {
       setShowInfoModal(true);
     }
     console.log(lastPlayed)
-    console.log(new Date().toLocaleString("default", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric",
-    }))
-    console.log(lastPlayed ===
-      new Date().toLocaleString("default", {
-        month: "long",
-        day: "2-digit",
-        year: "numeric",
-      }))
-    console.log(storedHistory)
+    console.log(`${monthNames[month - 1]} ${day}, ${year}`)
+    console.log(lastPlayed === `${monthNames[month - 1]} ${day}, ${year}`)
     if (
       lastPlayed &&
-      lastPlayed ===
-        new Date().toLocaleString("default", {
-          month: "long",
-          day: "2-digit",
-          year: "numeric",
-        }) &&
+      lastPlayed === `${monthNames[month - 1]} ${day}, ${year}` &&
       storedHistory
     ) {
       setSyncHistory(true);
