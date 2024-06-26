@@ -26,7 +26,6 @@ const App = () => {
   const [shouldShuffle, setShouldShuffle] = useState(false);
 
   useEffect(() => {
-    const dateObject = new Date();
     fetch(
       "https://lyrical-miscellany-backend.ta0ncc8o1ashc.ca-central-1.cs.amazonlightsail.com/game",
       {
@@ -35,9 +34,9 @@ const App = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          year: dateObject.getFullYear(),
-          month: dateObject.getMonth() + 1,
-          day: dateObject.getDate(),
+          year: new Date().getFullYear(),
+          month: new Date().getMonth() + 1,
+          day: new Date().getDate(),
         }),
       },
     )
@@ -58,7 +57,7 @@ const App = () => {
     if (
       lastPlayed &&
       lastPlayed ===
-        dateObject.toLocaleString("default", {
+        new Date().toLocaleString("default", {
           month: "long",
           day: "2-digit",
           year: "numeric",
