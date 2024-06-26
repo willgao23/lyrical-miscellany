@@ -43,33 +43,46 @@ const App = () => {
       .then((response) => response.json())
       .then((data) => {
         setGameState(data);
-        const savedStreak = localStorage.getItem("streak");
-        const lastPlayed = localStorage.getItem("lastPlayed");
-        const storedHistory = localStorage.getItem("history");
-        if (!savedStreak) {
-          localStorage.setItem("streak", "0");
-          setShowInfoModal(true);
-        }
-        if (
-          lastPlayed &&
-          lastPlayed ===
-            new Date().toLocaleString("default", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric",
-            }) &&
-          storedHistory
-        ) {
-          setSyncHistory(true);
-        } else {
-          localStorage.setItem("history", "");
-          localStorage.setItem("wonToday", "false");
-          setHistoryIsSynched(true);
-        }
       })
       .catch((err) => {
         console.log(err.message);
       });
+    const savedStreak = localStorage.getItem("streak");
+    const lastPlayed = localStorage.getItem("lastPlayed");
+    const storedHistory = localStorage.getItem("history");
+    if (!savedStreak) {
+      localStorage.setItem("streak", "0");
+      setShowInfoModal(true);
+    }
+    console.log(lastPlayed)
+    console.log(new Date().toLocaleString("default", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric",
+    }))
+    console.log(lastPlayed ===
+      new Date().toLocaleString("default", {
+        month: "long",
+        day: "2-digit",
+        year: "numeric",
+      }))
+    console.log(storedHistory)
+    if (
+      lastPlayed &&
+      lastPlayed ===
+        new Date().toLocaleString("default", {
+          month: "long",
+          day: "2-digit",
+          year: "numeric",
+        }) &&
+      storedHistory
+    ) {
+      setSyncHistory(true);
+    } else {
+      localStorage.setItem("history", "");
+      localStorage.setItem("wonToday", "false");
+      setHistoryIsSynched(true);
+    }
   }, []);
 
   useEffect(() => {
