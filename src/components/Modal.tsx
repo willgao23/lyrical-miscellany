@@ -48,7 +48,18 @@ export const Modal = ({
             Share Your Results
           </button>
         )}
-      <div className="contactBody">Created by {<a href='https://www.linkedin.com/in/william-gao-a91a8817a' target="_blank" rel="noreferrer noopener">Will Gao</a>}</div>
+        <div className="contactBody">
+          Created by{" "}
+          {
+            <a
+              href="https://www.linkedin.com/in/william-gao-a91a8817a"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Will Gao
+            </a>
+          }
+        </div>
       </div>
     </div>
   );

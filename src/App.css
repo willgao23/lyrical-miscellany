@@ -303,7 +303,7 @@ body {
 }
 
 a {
-  color: #000000
+  color: #000000;
 }
 
 @media screen and (max-width: 600px) {
@@ -335,7 +335,7 @@ a {
   }
 
   .footer {
-    width: 440px;
+    width: 430px;
   }
 }
 
