@@ -307,12 +307,12 @@ body {
   .header {
     justify-content: space-between;
     height: 150px;
-    width: 375px;
+    width: 430px;
   }
 
   .tile {
-    height: 85px;
-    width: 85px;
+    height: 100px;
+    width: 100px;
     border-radius: 7px;
     margin: 3px;
     padding: 3px;
@@ -320,18 +320,18 @@ body {
   }
 
   .answerOverlay {
-    height: 85px;
-    width: 380px;
+    height: 100px;
+    width: 430px;
     border-radius: 7px;
     margin: 3px;
   }
 
   .footer {
-    width: 375px;
+    width: 430px;
   }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 400px) {
   .header {
     justify-content: space-between;
     height: 150px;
