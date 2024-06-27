@@ -298,6 +298,14 @@ body {
   border: none;
 }
 
+.contactBody {
+  margin-top: 20px;
+}
+
+a {
+  color: #000000
+}
+
 @media screen and (max-width: 600px) {
   .game {
     margin-top: 30px;
@@ -307,7 +315,7 @@ body {
   .header {
     justify-content: space-between;
     height: 150px;
-    width: 430px;
+    width: 440px;
   }
 
   .tile {
@@ -321,13 +329,13 @@ body {
 
   .answerOverlay {
     height: 100px;
-    width: 430px;
+    width: 440px;
     border-radius: 7px;
     margin: 3px;
   }
 
   .footer {
-    width: 430px;
+    width: 440px;
   }
 }
 
