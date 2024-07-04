@@ -24,6 +24,7 @@ const App = () => {
   const [syncHistory, setSyncHistory] = useState(false);
   const [historyIsSynched, setHistoryIsSynched] = useState(false);
   const [shouldShuffle, setShouldShuffle] = useState(false);
+  const [underMaintenance, setUnderMaintenance] = useState(true);
 
   useEffect(() => {
     const dateObject = new Date();
@@ -200,84 +201,103 @@ const App = () => {
     }
   }, [correctGuesses, gameState]);
 
-  return (
-    <>
-      {showAlert && (
-        <div className="alertContainer">
-          <Alert text={alertText} />
-        </div>
-      )}
-      {showInfoModal && (
-        <div className="modalContainer">
-          <Modal
-            titleText={"How to Play"}
-            bodyText={
-              "Unscramble the lyrics from four different songs!\n\n To make your guess, select four tiles from the game grid.\n\n Each set of lyrics will contain the daily theme word at least once.\n\n  Try to group all of the lyrics before making four mistakes!"
-            }
-            isShareButtonModal={false}
-            modalExitFunction={() => setShowInfoModal(false)}
-            date={gameState?.["date"]}
-            theme={gameState?.["theme"]}
-            setShowAlert={setShowAlert}
-            setAlertText={setAlertText}
-          />
-        </div>
-      )}
-      {showGameOverModal && (
-        <div className="modalContainer">
-          <Modal
-            titleText={"Better luck next time..."}
-            bodyText={`Streak: ${localStorage.getItem("streak")}${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
-            isShareButtonModal={true}
-            modalExitFunction={() => setShowGameOverModal(false)}
-            date={gameState?.["date"]}
-            theme={gameState?.["theme"]}
-            setShowAlert={setShowAlert}
-            setAlertText={setAlertText}
-          />
-        </div>
-      )}
-      {showVictoryModal && (
-        <div className="modalContainer">
-          <Modal
-            titleText={"Lyrical savant!"}
-            bodyText={`Streak: ${localStorage.getItem("streak")}${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
-            isShareButtonModal={true}
-            modalExitFunction={() => setShowVictoryModal(false)}
-            date={gameState?.["date"]}
-            theme={gameState?.["theme"]}
-            setShowAlert={setShowAlert}
-            setAlertText={setAlertText}
-          />
-        </div>
-      )}
-      <div className="app">
-        <Header theme={gameState?.["theme"]} />
-        <Game
-          gameState={gameState}
-          mistakeCount={mistakeCount}
-          setMistakeCount={setMistakeCount}
+  if (underMaintenance) {
+    return (
+    <div className="app">
+      <Header theme={gameState?.["theme"]} />
+      <div className="modalContainer">
+        <Modal
+          titleText={"Under maintenance"}
+          bodyText={`We're currently making improvements to Lyrical Miscellany.\n\n  Planned return date: July 6th, 2024.\n\n  Thanks for your patience!`}
+          isShareButtonModal={false}
+          modalExitFunction={() => {}}
+          date={gameState?.["date"]}
+          theme={gameState?.["theme"]}
           setShowAlert={setShowAlert}
-          correctGuesses={correctGuesses}
-          setCorrectGuesses={setCorrectGuesses}
-          history={history}
-          setHistory={setHistory}
-          titles={titles}
-          setTitles={setTitles}
-          historyIsSynched={historyIsSynched}
-          setHistoryIsSynched={setHistoryIsSynched}
           setAlertText={setAlertText}
-          shouldShuffle={shouldShuffle}
-          setShouldShuffle={setShouldShuffle}
-        />
-        <Footer
-          mistakeCount={mistakeCount}
-          setShowInfoModal={setShowInfoModal}
-          setShouldShuffle={setShouldShuffle}
         />
       </div>
-    </>
-  );
+    </div>);
+  } else {
+    return (
+      <>
+        {showAlert && (
+          <div className="alertContainer">
+            <Alert text={alertText} />
+          </div>
+        )}
+        {showInfoModal && (
+          <div className="modalContainer">
+            <Modal
+              titleText={"How to Play"}
+              bodyText={
+                "Unscramble the lyrics from four different songs!\n\n To make your guess, select four tiles from the game grid.\n\n Each set of lyrics will contain the daily theme word at least once.\n\n  Try to group all of the lyrics before making four mistakes!"
+              }
+              isShareButtonModal={false}
+              modalExitFunction={() => setShowInfoModal(false)}
+              date={gameState?.["date"]}
+              theme={gameState?.["theme"]}
+              setShowAlert={setShowAlert}
+              setAlertText={setAlertText}
+            />
+          </div>
+        )}
+        {showGameOverModal && (
+          <div className="modalContainer">
+            <Modal
+              titleText={"Better luck next time..."}
+              bodyText={`Streak: ${localStorage.getItem("streak")}${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
+              isShareButtonModal={true}
+              modalExitFunction={() => setShowGameOverModal(false)}
+              date={gameState?.["date"]}
+              theme={gameState?.["theme"]}
+              setShowAlert={setShowAlert}
+              setAlertText={setAlertText}
+            />
+          </div>
+        )}
+        {showVictoryModal && (
+          <div className="modalContainer">
+            <Modal
+              titleText={"Lyrical savant!"}
+              bodyText={`Streak: ${localStorage.getItem("streak")}${String.fromCodePoint(0x1f525)}\n\n${guessGridText}`}
+              isShareButtonModal={true}
+              modalExitFunction={() => setShowVictoryModal(false)}
+              date={gameState?.["date"]}
+              theme={gameState?.["theme"]}
+              setShowAlert={setShowAlert}
+              setAlertText={setAlertText}
+            />
+          </div>
+        )}
+        <div className="app">
+          <Header theme={gameState?.["theme"]} />
+          <Game
+            gameState={gameState}
+            mistakeCount={mistakeCount}
+            setMistakeCount={setMistakeCount}
+            setShowAlert={setShowAlert}
+            correctGuesses={correctGuesses}
+            setCorrectGuesses={setCorrectGuesses}
+            history={history}
+            setHistory={setHistory}
+            titles={titles}
+            setTitles={setTitles}
+            historyIsSynched={historyIsSynched}
+            setHistoryIsSynched={setHistoryIsSynched}
+            setAlertText={setAlertText}
+            shouldShuffle={shouldShuffle}
+            setShouldShuffle={setShouldShuffle}
+          />
+          <Footer
+            mistakeCount={mistakeCount}
+            setShowInfoModal={setShowInfoModal}
+            setShouldShuffle={setShouldShuffle}
+          />
+        </div>
+      </>
+    );
+  }
 };
 
 export default App;
