@@ -184,6 +184,11 @@ export const Game = ({
               }
             }
           }
+          let fullLyric = ""
+            fullLyric = fullLyric +  gameState["songs"][i]["lyrics"][0]
+            for (let k = 1; k < 4; k++) {
+              fullLyric = fullLyric + " / " + gameState["songs"][i]["lyrics"][k]
+          }
           setTileClasses({
             "00": "tile",
             "01": "tile",
@@ -207,7 +212,7 @@ export const Game = ({
           setCorrectGuesses(correctGuesses + 1);
           setTitles([
             ...titles,
-            { title: gameState["songs"][i]["title"], color: colorMapping[i] },
+            { title: gameState["songs"][i]["title"], fullLyrics: fullLyric, color: colorMapping[i] },
           ]);
           setHistory([...history, guesses]);
           return;
