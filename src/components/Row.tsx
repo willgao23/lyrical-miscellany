@@ -10,6 +10,7 @@ interface RowProps {
   showAnswer: boolean;
   title: string;
   answerColor: string;
+  fullLyric: string;
 }
 
 export const Row = ({
@@ -21,9 +22,10 @@ export const Row = ({
   showAnswer,
   title,
   answerColor,
+  fullLyric
 }: RowProps) => {
   if (showAnswer) {
-    return <AnswerOverlay title={title} color={answerColor} />;
+    return <AnswerOverlay title={title} color={answerColor} fullLyric={fullLyric}/>;
   } else {
     return (
       <div className="row">

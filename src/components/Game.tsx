@@ -301,6 +301,7 @@ export const Game = ({
         setTileClasses={setTileClasses}
         showAnswer={correctGuesses >= 1}
         title={titles.length > 0 ? titles[0]["title"] : ""}
+        fullLyric={titles.length > 0 ? titles[0]["fullLyrics"] : ""}
         answerColor={titles.length > 0 ? titles[0]["color"] : ""}
       />
       <Row
@@ -311,6 +312,7 @@ export const Game = ({
         setTileClasses={setTileClasses}
         showAnswer={correctGuesses >= 2}
         title={titles.length > 1 ? titles[1]["title"] : ""}
+        fullLyric={titles.length > 1 ? titles[1]["fullLyrics"] : ""}
         answerColor={titles.length > 1 ? titles[1]["color"] : ""}
       />
       <Row
@@ -321,6 +323,7 @@ export const Game = ({
         setTileClasses={setTileClasses}
         showAnswer={correctGuesses >= 3}
         title={titles.length > 2 ? titles[2]["title"] : ""}
+        fullLyric={titles.length > 2 ? titles[2]["fullLyrics"] : ""}
         answerColor={titles.length > 2 ? titles[2]["color"] : ""}
       />
       <Row
@@ -331,6 +334,7 @@ export const Game = ({
         setTileClasses={setTileClasses}
         showAnswer={correctGuesses >= 4}
         title={titles.length > 3 ? titles[3]["title"] : ""}
+        fullLyric={titles.length > 3 ? titles[3]["fullLyrics"] : ""}
         answerColor={titles.length > 3 ? titles[3]["color"] : ""}
       />
     </div>

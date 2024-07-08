@@ -24,7 +24,7 @@ const App = () => {
   const [syncHistory, setSyncHistory] = useState(false);
   const [historyIsSynched, setHistoryIsSynched] = useState(false);
   const [shouldShuffle, setShouldShuffle] = useState(false);
-  const [underMaintenance, setUnderMaintenance] = useState(true);
+  const [underMaintenance, setUnderMaintenance] = useState(false);
 
   useEffect(() => {
     const dateObject = new Date();
@@ -66,24 +66,24 @@ const App = () => {
       .catch((err) => {
         console.log(err.message);
       });
-    const savedStreak = localStorage.getItem("streak");
-    const lastPlayed = localStorage.getItem("lastPlayed");
-    const storedHistory = localStorage.getItem("history");
-    if (!savedStreak) {
-      localStorage.setItem("streak", "0");
-      setShowInfoModal(true);
-    }
-    if (
-      lastPlayed &&
-      lastPlayed === `${monthNames[month - 1]} ${day}, ${year}` &&
-      storedHistory
-    ) {
-      setSyncHistory(true);
-    } else {
-      localStorage.setItem("history", "");
-      localStorage.setItem("wonToday", "false");
-      setHistoryIsSynched(true);
-    }
+      const savedStreak = localStorage.getItem("streak");
+      const lastPlayed = localStorage.getItem("lastPlayed");
+      const storedHistory = localStorage.getItem("history");
+      if (!savedStreak) {
+        localStorage.setItem("streak", "0");
+        setShowInfoModal(true);
+      }
+      if (
+        lastPlayed &&
+        lastPlayed === `${monthNames[month - 1]} ${day < 10 ? "0" + day.toString() : day}, ${year}` &&
+        storedHistory
+      ) {
+        setSyncHistory(true);
+      } else {
+        localStorage.setItem("history", "");
+        localStorage.setItem("wonToday", "false");
+        setHistoryIsSynched(true);
+      }
   }, []);
 
   useEffect(() => {
@@ -113,8 +113,14 @@ const App = () => {
         if (isCorrect) {
           numCorrect = numCorrect + 1;
           const titleIndex = colorMapping.indexOf(firstSeen);
+          let fullLyric = ""
+          fullLyric = fullLyric +  gameState["songs"][i]["lyrics"][0]
+          for (let k = 1; k < 4; k++) {
+            fullLyric = fullLyric + " / " + gameState["songs"][i]["lyrics"][k]
+          }
           updatedTitles.push({
             title: gameState["songs"][titleIndex]["title"],
+            fullLyrics: fullLyric,
             color: firstSeen,
           });
         } else {
@@ -163,8 +169,14 @@ const App = () => {
         setTimeout(() => {
           const updatedTitles = [...titles];
           for (let i = 0; i < 4; i++) {
+            let fullLyric = ""
+            fullLyric = fullLyric +  gameState["songs"][i]["lyrics"][0]
+            for (let k = 1; k < 4; k++) {
+              fullLyric = fullLyric + " / " + gameState["songs"][i]["lyrics"][k]
+            }
             const answer = {
               title: gameState["songs"][i]["title"],
+              fullLyrics: fullLyric,
               color: colorMapping[i],
             };
             let answerInTitles = false;
